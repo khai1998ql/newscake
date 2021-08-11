@@ -35,11 +35,12 @@
 			<td><?php echo $category['Category']['modified']; ?></td>
 			<td>
 				<?php echo $this->HTML->link('Xem', array('controller' => 'categories', 'action' => 'view', $category['Category']['id']), array('class' => 'btn btn-success')) ?>
-				<?php echo $this->HTML->link('Sửa', array('controller' => 'categories', 'action' => 'edit', $category['Category']['id']), array('class' => 'btn btn-danger')) ?>
-<!--				<span class="btn btn-danger">Sửa</span>-->
-				<?php echo $this->Form->postLink('Xóa', array('controller' => 'categories', 'action' => 'delete', $category['Category']['id']), array('class' => 'btn btn-dark'),
-				array('confirm' => 'Bạn có chắc chắn muốn xóa danh mục này không?')); ?>
-<!--				<span class="btn btn-dark">Xóa</span>-->
+				<?php if($category['Category']['user_id'] == AuthComponent::user('id')) : ?>
+					<?php echo $this->HTML->link('Sửa', array('controller' => 'categories', 'action' => 'edit', $category['Category']['id']), array('class' => 'btn btn-danger')) ?>
+	<!--				<span class="btn btn-danger">Sửa</span>-->
+					<?php echo $this->Form->postLink('Xóa', array('controller' => 'categories', 'action' => 'delete', $category['Category']['id']), array('class' => 'btn btn-dark'),
+					array('confirm' => 'Bạn có chắc chắn muốn xóa danh mục này không?')); ?>
+<!--			<?php endif; ?>
 			</td>
 		</tr>
 		<?php

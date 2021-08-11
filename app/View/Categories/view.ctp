@@ -33,11 +33,11 @@
 			<td><?php echo $post['modified'] ?></td>
 			<td>
 				<?php echo $this->HTML->link('Xem', array('controller' => 'posts', 'action' => 'view', $post['id']), array('class' => 'btn btn-success')) ?>
-				<?php echo $this->HTML->link('Sửa', array('controller' => 'posts', 'action' => 'edit', $post['id']), array('class' => 'btn btn-danger')) ?>
-				<!--				<span class="btn btn-danger">Sửa</span>-->
-				<?php echo $this->Form->postLink('Xóa', array('controller' => 'posts', 'action' => 'delete', $post['id'], $category['Category']['id']), array('class' => 'btn btn-dark'),
-						array('confirm' => 'Bạn có chắc chắn muốn xóa bài viết này không?')); ?>
-				<!--				<span class="btn btn-dark">Xóa</span>-->
+				<?php if($post['user_id'] == AuthComponent::user('id')) : ?>
+					<?php echo $this->HTML->link('Sửa', array('controller' => 'posts', 'action' => 'edit', $post['id']), array('class' => 'btn btn-danger')) ?>
+					<?php echo $this->Form->postLink('Xóa', array('controller' => 'posts', 'action' => 'delete', $post['id'], $category['Category']['id']), array('class' => 'btn btn-dark'),
+							array('confirm' => 'Bạn có chắc chắn muốn xóa bài viết này không?')); ?>
+				<?php endif; ?>
 			</td>
 		</tr>
 		<?php

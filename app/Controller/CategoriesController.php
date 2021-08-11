@@ -33,16 +33,22 @@
 		 * @param $id
 		 */
 		public function edit($id){
-			$data = $this->Category->findById($id);
 
-			if($this->request->is(array('post', 'put'))){
-				$this->Category->id = $id;
-				if($this->Category->save($this->request->data)){
-					$this->Session->setFlash('Thay đổi dữ liệu thành công!');
-					$this->redirect('index');
+			$data = $this->Category->findById($id);
+			if($data['Category']['user_id'] == AuthComponent::user('id')){
+				if($this->request->is(array('post', 'put'))){
+					$this->Category->id = $id;
+					if($this->Category->save($this->request->data)){
+						$this->Session->setFlash('Thay đổi dữ liệu thành công!');
+						$this->redirect('index');
+					}
 				}
+				$this->request->data = $data;
+			}else{
+				$this->Session->setFlash('Bạn không có quyền vào trang!');
+				$this->redirect('index');
 			}
-			$this->request->data = $data;
+
 		}
 
 		/**
@@ -50,12 +56,19 @@
 		 */
 		public function delete($id){
 			$this->Category->id = $id;
-			if($this->request->is(array('post', 'put'))){
-				if($this->Category->delete()){
-					$this->Session->setFlash('Danh mục đã được xóa!');
-					$this->redirect('index');
+			$data = $this->Category->findById($id);
+			if($data['Category']['user_id'] == AuthComponent::user('id')){
+				if($this->request->is(array('post', 'put'))){
+					if($this->Category->delete()){
+						$this->Session->setFlash('Danh mục đã được xóa!');
+						$this->redirect('index');
+					}
 				}
+			}else{
+				$this->Session->setFlash('Bạn không có quyền vào trang!');
+				$this->redirect('index');
 			}
+
 		}
 
 		/**
