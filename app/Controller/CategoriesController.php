@@ -16,16 +16,24 @@
 		 *
 		 */
 		public function add(){
-
+//			debug(WWW_ROOT . 'files/');die;
 			if($this->request->is('post')){
+//				debug($this->request);die;
 				$this->Category->create();
-				$this->request->data['Category']['user_id'] = AuthComponent::user('id');
-				if($this->Category->save($this->request->data)){
-					$this->Session->setFlash('Tạo mới danh mục thành công!');
-					$this->redirect('index');
-				}else{
-					$this->Session->setFlash('Error');
+				$fileName = $this->request->data['Category']['category_path']['name'];
+				$uploadPath =  'files/';
+				$uploadFile = WWW_ROOT . $uploadPath . $fileName;
+				if(move_uploaded_file($this->request->data['Category']['category_path']['tmp_name'],$uploadFile)){
+					$this->request->data['Category']['user_id'] = AuthComponent::user('id');
+					$this->request->data['Category']['category_path'] = $uploadPath . $fileName;
+					if($this->Category->save($this->request->data)){
+						$this->Session->setFlash('Tạo mới danh mục thành công!');
+						$this->redirect('index');
+					}else{
+						$this->Session->setFlash('Error');
+					}
 				}
+
 			}
 		}
 
@@ -77,5 +85,10 @@
 		public function view($id){
 			$data = $this->Category->findById($id);
 			$this->set('category', $data);
+		}
+		public function download($id){
+			$this->layout = null;
+			$data = $this->Category->findById($id);
+			$this->set('data', $data);
 		}
 	}

@@ -43,8 +43,13 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 <!--		<div id="header">-->
 <!--			<h1>--><?php //echo $this->Html->link($cakeDescription, 'https://cakephp.org'); ?><!--</h1>-->
 <!--		</div>-->
-		<div style="margin-top: 30px">
-
+		<div style="margin-bottom: 30px">
+<!--			--><?php
+//				if(AuthComponent::user()){
+//					echo '<pre>';
+//					print_r(AuthComponent::user());
+//				}
+//			?>
 		</div>
 		<div id="content">
 
