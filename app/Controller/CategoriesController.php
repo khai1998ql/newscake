@@ -18,7 +18,8 @@
 		public function add(){
 //			debug(WWW_ROOT . 'files/');die;
 			if($this->request->is('post')){
-//				debug($this->request);die;
+				debug($this->request);die;
+//				debug($_FILES['file']);die;
 				$this->Category->create();
 				$fileName = $this->request->data['Category']['category_path']['name'];
 				$uploadPath =  'files/';

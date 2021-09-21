@@ -10,7 +10,10 @@
 <?php
 	echo $this->Form->create('Category', array('enctype' => 'multipart/form-data'));
 	echo $this->Form->input('name');
-	echo $this->Form->input('category_path', array('type' => 'file'));
+	echo $this->Form->input('category_path', array('name' => 'data[Category][category_path][]','type' => 'file', 'multiple' => true));
+
 	echo $this->Form->select('status', array(0 => 'Hidden', 1 => 'Public'), array('empty' => false));
-	echo $this->Form->end('Tạo mới');
+
 ?>
+<!--	<input type="file" name="file[]" multiple />-->
+<?php echo $this->Form->end('Tạo mới'); ?>
